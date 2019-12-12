@@ -5,7 +5,8 @@ from datetime import datetime
 import fiona.crs
 # log.getLogger().setLevel(log.INFO)
 
-north_pole_crs = fiona.crs.from_string("+proj=stere +lat_0=90 +lat_ts=90 +lon_0=0 +k=1 +x_0=0 +y_0=0 +a=3376200 +b=3376200 +units=m +no_defs")
+north_pole_crs = fiona.crs.from_string("+proj=stere +lat_0=90 +lon_0=0 +k=1 +x_0=0 +y_0=0 +a=3396190 +b=3376200 +units=m +no_defs ")
+mars_2000_crs = fiona.crs.from_string("+proj=longlat +a=3396190 +b=3376200 +no_defs ")
 
 
 basepath="http://pds-geosciences.wustl.edu/mro/mro-m-sharad-5-radargram-v1/mrosh_2001"
@@ -135,6 +136,6 @@ def read_geom_lbl(file):
 
 def pandas_to_geopandas_points(df, xname="longitude", yname="latitude"):
     geometry = [Point(xy) for xy in zip(df.longitude, df.latitude)]
-    crs = fiona.crs.from_string("+proj=longlat +a=3396190 +b=3376200 +no_defs") # MARS 2000
+    crs = mars_2000_crs
     geo_df = GeoDataFrame(df, crs=crs, geometry=geometry)
     return geo_df
